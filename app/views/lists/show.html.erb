@@ -1,0 +1,29 @@
+<div class="p-2 px-5 mb-2 bg-light border-bottom">
+  <div class= "d-flex align-items-center justify-content-between">
+    <%= link_to "My Watch Lists", lists_path, class:"btn btn-lg"%>
+    <%= link_to "Create New List", new_list_path, class:"btn btn-outline-primary"%>
+  </div>
+</div>
+<div class="container">
+  <h1 style="text-align:center"><%= @list.name %></h1>
+  <div class= "d-flex align-items-center justify-content-between">
+      <%= link_to "Add New Movie", new_list_bookmark_path(@list), class:"btn btn-outline-primary"%>
+      <p><%= @bookmarks_movies.length %> movie<%= @bookmarks_movies.length == 1 ? '' : 's' %></p>
+    </div>
+  <ul>
+  <% @bookmarks_movies.each do |bookmark, movie| %>
+      <% movie = Movie.find(bookmark.movie_id) %>
+      <li>
+      <ul class = 'mt-5'>
+        <h3><%= movie.title %></h3>
+        <p>"<%= bookmark.comment %>"</p>
+        <li><%= movie.poster_url %></li>
+        <li><%= movie.rating %></li>
+        <li><%= movie.overview %></li>
+        <%= link_to "Delete", bookmark_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+        class:"link-danger text-decoration-none px-2"%>
+      </ul>
+  </li>
+  <% end %>
+  </ul>
+</div>
